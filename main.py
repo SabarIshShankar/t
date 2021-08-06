@@ -56,7 +56,7 @@ app.layout = html.Div([
 	yaxis = {'title':'Returns', 'tickerformat': ".2%"}
 	)}),
 	dcc.Markdown('''---'''),
-	html.H1('YTD and total position resturn versurs S7P 500'),
+	html.H1('YTD and total position return versurs S7P 500'),
 	dcc.Graph(id='ytd1',
 	figure = {'data':[
 		go.Bar(
@@ -97,6 +97,36 @@ app.layout = html.Div([
 	style={'wdith':'50%', 'display':'inline-block'}),
 
 	dcc.Markdown(''' --- '''),
+	html.H1('Cumulative Returns per position over time'),
+	dcc.Graph(id='crot1', figure = {
+		'data': [
+			go.Bar(
+				x = data['Ticker #'][0:20],
+				y = data['Stock gain/loss'][0:20],
+				name = 'Ticker total return ($)'
+			),
+			go.Bar(
+				x = data['Ticker #'][0:20],
+				y = data['SP 500 gain/loss'][0:20],
+				name = 'SP500 total return ($)'
+			),
+			go.Scatter(
+				x = data['Ticker #'][0:20],
+				y= data['Ticker return'][0:20],
+				name  = 'Ticker total Return %', yaxis = 'y2'
+			)
+		],
+		'layout': go.Layout(title='Gain/Loss and Total return vs SP500',
+		barmode = 'group',
+		xaxis = {'title': 'Ticker'},
+		yaxis={'title': 'Gain/Loss ($)'},
+		yaxis2 = {'title':'Ticker Return', 'overlaying':'y','side':'right', 'tickerformat':".1%"},
+		legend = {'x':'0.75','y':'1.2'}
+		)
+	}, style {'width': '100%'}),
 
+	dcc.Markdown(''' --- '''),
+	html.H1('Total cumulative investments by portfolio over time'),
+	dcc.Graph()
 	
 ])
