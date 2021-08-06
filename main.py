@@ -36,10 +36,67 @@ app.layout = html.Div([
 	
 	], style={'display':'inline-block', 'verticalAlign':'top', 'width':'30%'}),
 	html.Div([html.H3('Enter start / end date:'),
-	dcc.DatePickerRange(id='my_data_picker',
+	dcc.DatePickerRange(id='my_date_picker',
 	min_date_allowed = datetime(2015,1,1),
 	max_date_allowed = datetime.today(),
 	start_date = datetime(2018,1,1),
 	end_date = datetime.today()
 	)], style={'display':'inline-block'}),
+	html.Div([
+		html.button(id='submit-button',
+		n_clicks = 0,
+		children = 'Submit',
+		style = {'fontSize':24, 'marginLeft':'30px'})
+	], style={'display':'inline-block'}), 
+
+	dcc.Graph(id='my_graph',
+	figure={'data': [
+		{'x':[1,2],'y':[3,1]}
+	], 'layout':go.Layout(title='Relative Stock Returns Comparison',
+	yaxis = {'title':'Returns', 'tickerformat': ".2%"}
+	)}),
+	dcc.Markdown('''---'''),
+	html.H1('YTD and total position resturn versurs S7P 500'),
+	dcc.Graph(id='ytd1',
+	figure = {'data':[
+		go.Bar(
+			x=data['Ticker'][0:20],
+			y = data['Share YTD'][0:20],
+			name = 'Ticker YTD'
+		),
+		go.Scatter(
+			x=data['Ticker'][0:20],
+			y = data['SP 500 YTD'][0:20],
+			name = 'SP500 YTD'
+		)
+	],
+	'layout':go.Layout(title='YTD Return vs S&P 500 YTD',
+	barmode='group'
+	xaxis = {'title':'Ticker'},
+	yaxis = {'title':'Returns',
+	'tickerFormat':".2%"}
+	)}, style={'width':'50%','display':'inline-block'}
+	),
+	dcc.Graph(id='total1',
+	figure = {'data': [
+		go.Bar(
+			x = data['Ticker #'][0:20],
+			y = data['Ticker return'][0:20],
+			name = 'Ticker total return'
+		),
+		go.Scatter(
+			x = data['Ticker #'][0:20],
+			y = data['SP Return'][0:20],
+			name = 'SP500 total return'
+		)
+	],
+	'layout':go.Layout(title:'Total return vs S&P 500',
+	barmode='group',
+	xaxis = {'title':'Ticker'},
+	yaxis = {'title':'Returns', 'tickerformat':".2%"})}, 
+	style={'wdith':'50%', 'display':'inline-block'}),
+
+	dcc.Markdown(''' --- '''),
+
+	
 ])
