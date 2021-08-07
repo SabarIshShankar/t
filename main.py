@@ -163,8 +163,31 @@ app.layout = html.Div([
 	dcc.Graph(id='tcot2',
 	figure = {'data': [
 		go.Bar(
-			
+			x = data['Ticker #'],
+			y = data['Cum Invst'],
+			name = 'Cum Invst'
+		),
+		go.Bar(
+			x = data['Ticker #'],
+			y = data['Cum SP Returns'],
+			name = 'Cum SP500 Returns'
+		),
+		go.Bar(
+			x = data['Ticker #'],
+			y = data['Cum Ticker Returns'],
+			name = 'Cum Ticker Returns'
+		),
+		go.Scatter(
+			x = data['Ticker #'],
+			y = data['Cum Ticker ROI Multi']
+			name = 'Cum ROI Mult', yaxis = 'y2'
 		)
-	]})
+	],
+	'layout':go.Layout(title='Total Cumulative Invesments ROI Multiple, over time', barmode='group',
+	xaxis = {'title':'ticker'},
+	yaxis = {'title': 'Returns'},
+	yaxis2 = {'title': 'Cum ROI Multi', 'overlaying':'y', 'side':'right'},
+	legend: {'x':'0.75','y':'1.2'}
+	)}, style= {'width': '100%'}),
 	
 ])
