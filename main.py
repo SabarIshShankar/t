@@ -127,6 +127,44 @@ app.layout = html.Div([
 
 	dcc.Markdown(''' --- '''),
 	html.H1('Total cumulative investments by portfolio over time'),
-	dcc.Graph()
+	dcc.Graph(id = 'tcot1',
+	figure = {'data': [
+		go.Scatter(
+			x = data['Ticker #'],
+			y = data['Cum Invst'],
+			mode = 'lines+markers',
+			name = 'Cum Invst'
+		),
+		go.Scatter(
+			x=data['Ticker #'],
+			y = data['Cum Ticker Returns'],
+			mode = 'lines+markers',
+			name = 'Cum Ticker Returns'
+		),
+		go.Scatter(
+			x = data['Ticker #'],
+			y = data['Cum Ticker Returns'],
+			mode = 'lines+markers',
+			name = 'Cum Ticker Returns'
+		),
+		go.Scatter(
+		x = data['Ticker #'],
+		y = data['Cum SP Returns'],
+		mode = 'lines+markers',
+		name = 'Cum SP500 Returns')
+	],
+	'layout':
+	go.Layout(title: 'Cumulative Investment Returns',
+	xaxis={'title': 'Ticker'},
+	yaxis = {'title': 'Returns'},
+	legend = {'x':'1'})},
+	style={'width': '100%'}
+	),
+	dcc.Graph(id='tcot2',
+	figure = {'data': [
+		go.Bar(
+			
+		)
+	]})
 	
 ])
