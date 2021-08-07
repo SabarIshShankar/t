@@ -190,4 +190,32 @@ app.layout = html.Div([
 	legend: {'x':'0.75','y':'1.2'}
 	)}, style= {'width': '100%'}),
 	
+	dcc.Markdown(''' --- '''),
+	html.H1('Current share price vs closing high since purchased'),
+	dcc.Graph(id='cvh1', figure = {'data': [
+		go.Bar(
+			x = data['Ticker #'][0:20],
+			y = data['Pct off high'][0:20],
+			name = 'Pct off high'
+		),
+		go.Scatter(
+			x = data['Ticker #'][0:20],
+			y = [-0.25, -0.25, -0.25, -0.25, -0.25, -0.25,-0.25, -0.25, -0.25,-0.25, -0.25, -0.25,-0.25, -0.25, -0.25,-0.25, -0.25, -0.25,-0.25, -0.25],
+			mode = 'lines',
+			name = 'Trailing stop marker',
+			ine = {'color':'red'}
+		)
+	], 'layout': go.Layout(title='Adj Close % off of high since purchased', barmode = 'group',xaxis = {'title':'Ticker'},
+	yaxis = {'title':'%Below High since purchased', 'tickformat': '0.2%'},
+	legend = {'x':'o.8','y':'1.2'}
+	)}, style={'width': '100%'}
+	),
+	dcc.Markdown(''' --- ''')
+])
+
+@app.callback(Output('my_graph', 'figure'),
+[Input('submit-button', 'n_clicks')],
+[State('my_ticker_symbol', 'value'),
+State('my_date_picker', 'start_date'),
+State('my_date_picker', 'end_date')
 ])
