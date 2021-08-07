@@ -219,3 +219,21 @@ app.layout = html.Div([
 State('my_date_picker', 'start_date'),
 State('my_date_picker', 'end_date')
 ])
+
+def update_graph(n_clicks, stock_ticker, start_date, end_date):
+	start = datetime.strptime(start_date[:10], '%Y-%m%d')
+	end = datetime.strptime(end_date[:10], '%Y-%m-%d')
+
+	traces = []
+	for tic in stock_ticker:
+		df = web.DataReader(tic, 'iex', start, end)
+		traces.append({ 'x':df.index, 'y':(df['close']/df['close'].iloc[0])-1, 'name':tic})
+
+		fig = {
+			'data': traces,
+			'layout': {'title': stock_ticker}
+		}
+		return fig
+
+if __name__ = '__main__':
+	app.run_server()
